@@ -1,3 +1,5 @@
 export default [
-  { path: '/' }
+  { path: '/aa', name: 'layout', component: () => import('@/layout/index'), children: [
+
+  ] }
 ]

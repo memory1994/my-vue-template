@@ -25,11 +25,37 @@ axios.interceptors.response.use(res => {
 })
 
 // 拦截code码
-export const interceptorResCode = (res, resolve) => {
-  Object.keys(RES_CODE).forEach(key => (RES_CODE[key].includes(res.code) && (res.code = key)))
-  if (res.code === 'LOGINEXPIRED') { // 登录失效
-    Message.error('登录过期请重新登录')
-  } else {
-    resolve(res)
-  }
+export const interceptorResCode = (res) => {
+  return new Promise(resolve => {
+    Object.keys(RES_CODE).forEach(key => (RES_CODE[key].includes(res.code) && (res.code = key)))
+    if (res.code === 'LOGINEXPIRED') { // 登录失效
+      Message.error('登录过期请重新登录')
+    } else {
+      resolve(res)
+    }
+  })
+}
+
+// post请求
+export const postRequest = async (url, params) => {
+  return await interceptorResCode(await axios({
+    url,
+    method: 'post',
+    data: params,
+    header: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  }))
+}
+
+// get请求
+export const getRequest = async (url, params) => {
+  return await interceptorResCode(await axios({
+    url,
+    method: 'get',
+    params: params,
+    header: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  }))
 }

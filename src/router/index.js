@@ -4,10 +4,14 @@ import ViewRouters from './view-routers'
 
 Vue.use(VueRouter)
 
+const routes = [
+  ...ViewRouters
+]
+
 const router = new VueRouter({
   mode: 'history',
-  base: '/',
-  routes: ViewRouters
+  // base: '/',
+  routes: routes
 })
 
 router.beforeEach((to, from, next) => {

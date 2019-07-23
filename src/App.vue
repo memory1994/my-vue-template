@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import Mock from '$mock/index'
+Mock()
 export default {
   name: 'App'
 }

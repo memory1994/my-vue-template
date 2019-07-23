@@ -15,9 +15,15 @@ import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import AppMain from './components/AppMain'
 import TagsView from './components/TagsView'
+import { apiGetMenuList } from '@/api/menuList'
 export default {
   name: 'Layout',
-  components: { Navbar, Sidebar, AppMain, TagsView }
+  components: { Navbar, Sidebar, AppMain, TagsView },
+  mounted () {
+    apiGetMenuList().then(res => {
+      console.log(res)
+    })
+  }
 }
 </script>
 
