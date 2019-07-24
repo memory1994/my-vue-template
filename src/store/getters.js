@@ -1,5 +1,6 @@
 const getters = {
-  menuList: state => state.menu.menuList
+  menuList: state => state.sidebar.menuList,
+  opened: state => state.sidebar.opened
 }
 
 export default getters

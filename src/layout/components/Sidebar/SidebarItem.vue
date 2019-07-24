@@ -1,12 +1,12 @@
 <template>
   <el-submenu
-    v-if="handleJudgeHasChidren(menuNav)"
+    v-if="handleJudgeHasChildren(menuNav)"
     :index="menuNav.menuUrl">
     <template slot="title">
       <i :class="[menuNav.menuIcon]"></i>
       <span slot="title">{{menuNav.menuName}}</span>
     </template>
-    <sub-menu-nav
+    <sidebar-item
       v-for="(subMenuNav, index) of menuNav.children"
       :key="'subMenuNav' + index"
       :menu-nav="subMenuNav"/>
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: 'SubMenuNav',
+  name: 'SidebarItem',
   props: {
     menuNav: {
       type: Object,
@@ -33,7 +33,7 @@ export default {
   methods: {
     // 判断是否还有子数据
     handleJudgeHasChildren (menuNav) {
-      return menuNav && menuNav.children.length
+      return menuNav && menuNav.children && menuNav.children.length
     },
     // 跳转页面
     handleJumpPages (menuNav) {

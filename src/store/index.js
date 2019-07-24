@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import user from './modules/user'
-import menu from './modules/menu'
+import sidebar from './modules/sidebar'
 
 import getters from './getters'
 import createLogger from 'vuex/dist/logger'
@@ -13,7 +13,7 @@ const isDev = process.env.NODE_ENV !== 'production'
 const store = new Vuex.Store({
   modules: {
     user,
-    menu
+    sidebar
   },
   getters,
   strict: isDev,

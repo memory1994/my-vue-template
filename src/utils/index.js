@@ -19,6 +19,7 @@ export const transformMenuToTree = (data, key = 'id', parentkey = 'menuParentId'
         r.sort((a, b) => a[sort] - b[sort])
       }
     }
+    return r
   } else {
     return [data]
   }

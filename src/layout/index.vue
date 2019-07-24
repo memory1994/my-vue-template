@@ -6,7 +6,6 @@
       <tags-view />
       <app-main />
     </div>
-    <navbar />
   </div>
 </template>
 
@@ -32,6 +31,11 @@ export default {
   display: flex;
   width: 100%;
   height: 100%;
+  .main-container {
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>
 

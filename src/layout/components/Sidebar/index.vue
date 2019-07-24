@@ -1,9 +1,13 @@
 <template>
-  <aside class="sidebar-container">
+  <aside :class="['sidebar-container', {'sidebar-opened': opened}]">
     <el-menu
       :default-active="$route.path"
+      :collapse="!opened"
+      background-color="#545c64"
+      text-color="#fff"
+      active-text-color="#ffd04b"
       mode="vertical">
-      <sub-menu-nav
+      <sidebar-item
         v-for="(menuNav, index) of menuList"
         :key="'menuNav' + index"
         :menu-nav="menuNav"/>
@@ -12,15 +16,33 @@
 </template>
 
 <script>
-import SubMenuNav from './SubMenuNav'
+import { mapGetters } from 'vuex'
+import SidebarItem from './SidebarItem'
 export default {
   name: 'Sidebar',
-  components: { SubMenuNav },
+  components: { SidebarItem },
   computed: {
-    menuList () {
-      return this.$store.getters.menuList
-    }
+    ...mapGetters([
+      'menuList',
+      'opened'
+    ])
   }
 }
 </script>
+
+<style lang="scss">
+.sidebar-container {
+  width: 65px;
+  height: 100%;
+  background-color: #545c64;
+  overflow: auto;
+  &.sidebar-opened {
+    width: 200px
+  }
+  .el-menu {
+    width: 100%;
+  }
+}
+</style>
+
 
