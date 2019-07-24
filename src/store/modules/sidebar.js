@@ -6,7 +6,7 @@ import { transformMenuToTree } from '@/utils/index'
 const sidebar = {
   state: {
     menuList: [],
-    opened: JSON.parse(sessionStorage.getItem('sidebarStatus')) || true
+    opened: sessionStorage.getItem('sidebarStatus') ? JSON.parse(sessionStorage.getItem('sidebarStatus')) : true
   },
   mutations: {
     SET_MENU_LIST (state, menu) {

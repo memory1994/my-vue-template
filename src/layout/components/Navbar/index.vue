@@ -1,13 +1,17 @@
 <template>
 	<nav class="navbar">
 		<i :class="['breadcrumb', opened ? 'el-icon-s-fold' : 'el-icon-s-unfold']" @click="handleToggleSidebar"></i>
+
+    <breadcrumb></breadcrumb>
 	</nav>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Breadcrumb from './Breadcrumb'
 export default {
-	name: 'Navbar',
+  name: 'Navbar',
+  components: { Breadcrumb },
 	computed: {
 		...mapGetters([
 			'opened'
@@ -32,6 +36,7 @@ export default {
 		color: #000;
 		padding: 0 15px;
 		vertical-align: middle;
+		cursor: pointer;
 	}
 }
 </style>

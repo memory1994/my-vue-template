@@ -1,9 +1,9 @@
 <template>
   <el-submenu
     v-if="handleJudgeHasChildren(menuNav)"
-    :index="menuNav.menuUrl">
+    :index="menuNav.menuPath">
     <template slot="title">
-      <i :class="[menuNav.menuIcon]"></i>
+      <i :class="[menuNav.menuIcon || 'el-icon-s-tools']"></i>
       <span slot="title">{{menuNav.menuName}}</span>
     </template>
     <sidebar-item
@@ -14,9 +14,9 @@
 
   <el-menu-item
     v-else
-    :index="menuNav.menuUrl"
+    :index="menuNav.menuPath"
     @click="handleJumpPages(menuNav)">
-    <i :class="[menuNav.menuIcon]"></i>
+    <i :class="[menuNav.menuIcon || 'el-icon-s-tools']"></i>
     <span slot="title">{{menuNav.menuName}}</span>
   </el-menu-item>
 </template>
@@ -37,7 +37,7 @@ export default {
     },
     // 跳转页面
     handleJumpPages (menuNav) {
-      this.$router.push(menuNav)
+      this.$router.push(menuNav.menuPath)
     }
   }
 }

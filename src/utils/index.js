@@ -1,6 +1,6 @@
 
 // 格式化菜单menu数据
-export const transformMenuToTree = (data, key = 'id', parentkey = 'menuParentId', sort = 'sortNo', children = 'children') => {
+export const transformMenuToTree = (data, key = 'id', parentkey = 'menuParentId', sort = 'sortNo') => {
   if (!key || !data) return []
   if (Array.isArray(data)) {
     const r = []
@@ -11,9 +11,9 @@ export const transformMenuToTree = (data, key = 'id', parentkey = 'menuParentId'
     for (let i = 0; i < data.length; i++) {
       let pKey = keyMap[data[i][parentkey]]
       if (pKey && data[i][key] !== data[i][parentkey]) {
-        (!pKey[children]) && (pKey[children] = [])
-        pKey[children].push(data[i])
-        pKey[children].sort((a, b) => a[sort] - b[sort])
+        (!pKey['children']) && (pKey['children'] = [])
+        pKey['children'].push(data[i])
+        pKey['children'].sort((a, b) => a[sort] - b[sort])
       } else {
         r.push(data[i])
         r.sort((a, b) => a[sort] - b[sort])

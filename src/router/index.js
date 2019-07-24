@@ -7,7 +7,6 @@ import 'nprogress/nprogress.css'// progress bar style
 
 Vue.use(VueRouter)
 
-console.log(store)
 const router = new VueRouter({
   mode: 'history',
   // base: '/',
@@ -26,18 +25,19 @@ router.beforeEach(async (to, from, next) => {
       const routes = res.list.filter(m => !!m.menuPath).map(m => {
         return {
           'path': m.menuPath,
-          'name': m.menuPath.replace(/\//g, '-'),
+          'name': m.menuPath.replace(/\//g, '-').replace(/^-/, ''),
           'meta': { 
             'title': m.menuName,
             'menuId': m.menuId,
             'menuParentId': m.menuParentId,
             'menuSort': m.menuSort
           },
-          'component': () => import(`@/views/${m.menuPath}`)
+          'component': () => import(`@/views${m.menuPath}`)
         }
       })
+      console.log(routes)
       router.addRoutes([
-        { path: '/aa', name: 'layout', component: () => import('@/layout/index'), children: routes},
+        { path: '/', name: 'layout', component: () => import('@/layout/index'), children: routes},
         { path: '*', redirect: '/404' }
       ])
       next({...to, replace: true})

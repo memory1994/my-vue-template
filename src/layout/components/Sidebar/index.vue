@@ -36,11 +36,13 @@ export default {
   height: 100%;
   background-color: #545c64;
   overflow: auto;
+  transition: width 0.5s ease;
   &.sidebar-opened {
-    width: 200px
+    width: 200px;
   }
   .el-menu {
     width: 100%;
+    border-right: none;
   }
 }
 </style>
