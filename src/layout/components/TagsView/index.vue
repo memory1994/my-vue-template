@@ -1,15 +1,16 @@
 <template>
-  <div :class="['tags-view-container', {'sidebar-opened': opened}]">
+  <div class="tags-view-container">
     <el-tabs 
       v-model="activeName"
+      :active="$route.path"
       type="card"
       @tab-click="handleOpenTag">
       <el-tab-pane
-        :key="item.value"
-        v-for="item in tagsList"
-        :label="item.label"
-        :name="item.value"
-        closable="true">
+        v-for="item in visitedViews"
+        :key="item.menuPath"
+        :label="item.menuName"
+        :name="item.menuPath"
+        :closable="!!visitedViews.length">
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -19,28 +20,20 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'TagsView',
-  computed: {
-    ...mapGetters([
-      'opended'
-    ])
-  },
   data () {
     return {
       activeName: '',
-      tagsList: [
-        { label: '首页', value: '1' },
-        { label: '首页', value: '2' },
-        { label: '首页', value: '3' },
-        { label: '首页', value: '4' },
-        { label: '首页', value: '5' },
-        { label: '首页', value: '6' },
-        { label: '首页', value: '7' },
-        { label: '首页', value: '5' },
-        { label: '首页', value: '6' },
-        { label: '首页', value: '4' },
-        { label: '首页', value: '5' },
-        { label: '首页', value: '6' },
-      ]
+      tagsList: []
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'visitedViews'
+    ])
+  },
+  watch: {
+    $route (route) {
+      console.log(2, route)
     }
   },
   methods: {
@@ -54,16 +47,12 @@ export default {
 
 <style lang="scss">
 .tags-view-container {
-  width: calc(100vw - 65px);
   height: 44px;
   line-height: 44px;
   background-color: #fff;
   margin: 5px 0 10px;
   padding: 5px 10px;
   box-sizing: border-box;
-  &.sidebar-opened {
-    width: calc(100vw - 200px);
-  }
   .el-tabs {
     .el-tabs__header {
       border: none;

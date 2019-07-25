@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <sidebar />
-    <div class="main-container">
+    <div class="main-container" :class="{'sidebar-opened': opened}">
       <navbar />
       <tags-view />
       <app-main />
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import AppMain from './components/AppMain'
@@ -18,10 +19,10 @@ import { apiGetMenuList } from '@/api/menuList'
 export default {
   name: 'Layout',
   components: { Navbar, Sidebar, AppMain, TagsView },
-  mounted () {
-    apiGetMenuList().then(res => {
-      console.log(res)
-    })
+  computed: {
+    ...mapGetters([
+      'opened'
+    ])
   }
 }
 </script>
@@ -35,6 +36,10 @@ export default {
     flex: auto;
     display: flex;
     flex-direction: column;
+    width: calc(100% - 65px);
+    &.sidebar-opened {
+      width: calc(100% - 200px);
+    }
   }
 }
 </style>
