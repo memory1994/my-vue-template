@@ -11,10 +11,14 @@ export const transformMenuToTree = (data, key = 'id', parentkey = 'menuParentId'
     for (let i = 0; i < data.length; i++) {
       let pKey = keyMap[data[i][parentkey]]
       if (pKey && data[i][key] !== data[i][parentkey]) {
-        (!pKey['children']) && (pKey['children'] = [])
-        pKey['children'].push(data[i])
-        pKey['children'].sort((a, b) => a[sort] - b[sort])
+        (!pKey.children) && (pKey.children = [])
+        data[i].parentName = `${pKey.parentName}|${data[i].menuName}` 
+        data[i].parentPath = `${pKey.parentPath}|${data[i].menuPath}` 
+        pKey.children.push(data[i])
+        pKey.children.sort((a, b) => a[sort] - b[sort])
       } else {
+        data[i].parentName = data[i].menuName
+        data[i].parentPath = data[i].menuPath
         r.push(data[i])
         r.sort((a, b) => a[sort] - b[sort])
       }

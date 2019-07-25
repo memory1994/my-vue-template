@@ -17,6 +17,9 @@ export default {
 			'opened'
 		])
 	},
+	mounted () {
+		console.log(this.$router)
+	},
 	methods: {
 		// 切换sidebar
 		handleToggleSidebar () {

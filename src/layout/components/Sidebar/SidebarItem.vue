@@ -37,6 +37,7 @@ export default {
     },
     // 跳转页面
     handleJumpPages (menuNav) {
+      console.log(this.$route)
       this.$router.push(menuNav.menuPath)
     }
   }

@@ -32,6 +32,7 @@ export default {
 
 <style lang="scss">
 .sidebar-container {
+  flex-shrink: 0;
   width: 65px;
   height: 100%;
   background-color: #545c64;

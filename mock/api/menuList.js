@@ -7,10 +7,10 @@ export default () => {
     data: {
       list: [
        { id: 1, menuParentId: 0, sortNo: 1, menuPath: '/test/1', menuName: '企业基本信息', menuIcon: 'el-icon-phone' },
-       { id: 2, menuParentId: 0, sortNo: 2, menuPath: '/test/2', menuName: 'aa项目', menuIcon: 'el-icon-s-tools' },
+       { id: 2, menuParentId: 0, sortNo: 2, menuPath: '', menuName: 'aa项目', menuIcon: 'el-icon-s-tools' },
        { id: 5, menuParentId: 4, sortNo: 2, menuPath: '/test/3', menuName: 'bb项目', menuIcon: 'el-icon-eleme' },
        { id: 3, menuParentId: 2, sortNo: 2, menuPath: '/test/4', menuName: 'cc项目', menuIcon: 'el-icon-info' },
-       { id: 4, menuParentId: 2, sortNo: 2, menuPath: '/test/5', menuName: 'dd项目', menuIcon: 'el-icon-goods' },
+       { id: 4, menuParentId: 2, sortNo: 2, menuPath: '', menuName: 'dd项目', menuIcon: 'el-icon-goods' },
        { id: 6, menuParentId: 5, sortNo: 2, menuPath: '/test/6', menuName: 'ee项目', menuIcon: 'el-icon-picture-outline' },
        { id: 7, menuParentId: 0, sortNo: 2, menuPath: '/test/7', menuName: 'ff项目', menuIcon: 'el-icon-bell' },
        { id: 8, menuParentId: 0, sortNo: 2, menuPath: '/test/8', menuName: 'gg项目', menuIcon: 'el-icon-s-platform' },
