@@ -17,9 +17,6 @@ export default {
 			'opened'
 		])
 	},
-	mounted () {
-		console.log(this.$router)
-	},
 	methods: {
 		// 切换sidebar
 		handleToggleSidebar () {
@@ -34,6 +31,7 @@ export default {
 	height: 52px;
 	line-height: 52px;
 	background-color: #fff;
+	border-bottom: 1px solid #eee;
 	.breadcrumb {
 		font-size: 20px;
 		color: #000;

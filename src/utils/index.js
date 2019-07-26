@@ -3,6 +3,7 @@
 export const transformMenuToTree = (data, key = 'id', parentkey = 'menuParentId', sort = 'sortNo') => {
   if (!key || !data) return []
   if (Array.isArray(data)) {
+    data = JSON.parse(JSON.stringify(data))
     const r = []
     const keyMap = {}
     for (let i = 0; i < data.length; i++) {
@@ -12,13 +13,9 @@ export const transformMenuToTree = (data, key = 'id', parentkey = 'menuParentId'
       let pKey = keyMap[data[i][parentkey]]
       if (pKey && data[i][key] !== data[i][parentkey]) {
         (!pKey.children) && (pKey.children = [])
-        data[i].parentName = `${pKey.parentName}|${data[i].menuName}` 
-        data[i].parentPath = `${pKey.parentPath}|${data[i].menuPath}` 
         pKey.children.push(data[i])
         pKey.children.sort((a, b) => a[sort] - b[sort])
       } else {
-        data[i].parentName = data[i].menuName
-        data[i].parentPath = data[i].menuPath
         r.push(data[i])
         r.sort((a, b) => a[sort] - b[sort])
       }
@@ -27,6 +24,28 @@ export const transformMenuToTree = (data, key = 'id', parentkey = 'menuParentId'
   } else {
     return [data]
   }
+}
+
+// 添加父属性标记
+export const addParentLevelSign = (data, key = 'id', parentKey = 'menuParentId') => {
+  if (Array.isArray(data)) {
+    data = JSON.parse(JSON.stringify(data))
+    const keyMap = {}
+    for (let i = 0; i < data.length; i++) {
+      keyMap[data[i][key]] = data[i]
+    }
+    for (let i = 0; i < data.length; i++) {
+      const pMap = keyMap[data[i][parentKey]] // 父级
+      if (pMap && data[i][key] !== data[i][parentKey]) {
+        data[i].parentName = `${pMap.parentName}|${data[i].menuName}`
+        data[i].parentPath = `${pMap.parentPath}|${data[i].menuPath}`
+      } else {
+        data[i].parentName = data[i].menuName
+        data[i].parentPath = data[i].menuPath
+      }
+    }
+  }
+  return data
 }
 
 // 转换时间戳

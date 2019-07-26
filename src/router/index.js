@@ -21,21 +21,21 @@ router.beforeEach(async (to, from, next) => {
     if (store.getters.menuList.length) {
       next()
     } else {
-      const res = await store.dispatch('setMenuList')
-      const routes = res.list.filter(m => !!m.menuPath).map(m => {
+      const data = await store.dispatch('setMenuList')
+      console.log(data)
+      const routes = data.filter(m => !!m.menuPath).map(m => {
         return {
           'path': m.menuPath,
           'name': m.menuPath.replace(/\//g, '-').replace(/^-/, ''),
           'meta': { 
             'title': m.menuName,
-            'menuId': m.menuId,
-            'menuParentId': m.menuParentId,
-            'menuSort': m.menuSort
+            'menuId': m.id,
+            'parentName': m.parentName,
+            'parentPath': m.parentPath
           },
           'component': () => import(`@/views${m.menuPath}`)
         }
       })
-      console.log(routes)
       router.addRoutes([
         { path: '/', name: 'layout', component: () => import('@/layout/index'), children: routes},
         { path: '*', redirect: '/404' }

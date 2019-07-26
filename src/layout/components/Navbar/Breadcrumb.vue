@@ -10,11 +10,27 @@
 </template>
 
 <script>
+import { getterMap } from 'vuex'
 export default {
   name: 'Breadcrumb',
   data () {
     return {
       list: []
+    }
+  },
+  computed: {
+    levelList () {
+      let route = this.$route
+      let pathList = route.meta.parentPath.split('|')
+      let nameList = route.meta.parentName.split('|')
+      let levelList = []
+      pathList.forEach((p, i) => {
+        levelList.push({
+          path: p,
+          name: nameList[i]
+        })
+      })
+      return levelList
     }
   }
 }

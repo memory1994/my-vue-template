@@ -4,7 +4,7 @@
     <div class="main-container" :class="{'sidebar-opened': opened}">
       <navbar />
       <tags-view />
-      <app-main />
+      <app-main v-if="isRouteAlive"/>
     </div>
   </div>
 </template>
@@ -15,14 +15,29 @@ import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import AppMain from './components/AppMain'
 import TagsView from './components/TagsView'
-import { apiGetMenuList } from '@/api/menuList'
 export default {
   name: 'Layout',
   components: { Navbar, Sidebar, AppMain, TagsView },
+  provide () {
+    return {
+      refreshCurPage: this.handleRefreshCurPage
+    }
+  },
   computed: {
     ...mapGetters([
       'opened'
     ])
+  },
+  data () {
+    return {
+      isRouteAlive: true //重载组件
+    }
+  },
+  methods: {
+    handleRefreshCurPage () {
+      this.isRouteAlive = false
+      this.$nextTick(() => { this.isRouteAlive = true })
+    }
   }
 }
 </script>

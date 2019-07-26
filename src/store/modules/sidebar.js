@@ -1,5 +1,5 @@
 import { apiGetMenuList } from '@/api/menuList'
-import { transformMenuToTree } from '@/utils/index'
+import { transformMenuToTree, addParentLevelSign } from '@/utils/index'
 
 
 
@@ -21,7 +21,7 @@ const sidebar = {
     async setMenuList ({ commit }, params) {
       const res = await apiGetMenuList(params)
       commit('SET_MENU_LIST', transformMenuToTree(res.data.list))
-      return res.data
+      return addParentLevelSign(res.data.list)
     },
     toggleSidebar ({ commit }) {
       commit('TOGGLE_SIDEBAR')
