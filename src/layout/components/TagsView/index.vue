@@ -96,7 +96,7 @@ export default {
     handleCommand (command) {
       let { tag } = this.handleFindTag(this.activeName)
       if (command === 'closeCurrent') {
-        this.handleTabEdit(this.activeName, 'remove')
+        this.visitedViews.length > 1 && this.handleTabEdit(this.activeName, 'remove')
       } else if (command === 'closeOthers') {
         this.$store.dispatch('delOthersViews', tag)
       } else if (command === 'closeAll') {

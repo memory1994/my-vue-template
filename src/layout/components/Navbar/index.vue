@@ -28,6 +28,8 @@ export default {
 
 <style lang="scss">
 .navbar {
+	display: flex;
+	align-items: center;
 	height: 52px;
 	line-height: 52px;
 	background-color: #fff;
