@@ -1,51 +1,47 @@
-
 // 格式化菜单menu数据
-export const transformMenuToTree = (data, key = 'id', parentkey = 'menuParentId', sort = 'sortNo') => {
-  if (!key || !data) return []
+export const formatMenuList = (data) => {
   if (Array.isArray(data)) {
-    data = JSON.parse(JSON.stringify(data))
-    const r = []
-    const keyMap = {}
-    for (let i = 0; i < data.length; i++) {
-      keyMap[data[i][key]] = data[i]
-    }
-    for (let i = 0; i < data.length; i++) {
-      let pKey = keyMap[data[i][parentkey]]
-      if (pKey && data[i][key] !== data[i][parentkey]) {
-        (!pKey.children) && (pKey.children = [])
-        pKey.children.push(data[i])
-        pKey.children.sort((a, b) => a[sort] - b[sort])
-      } else {
-        r.push(data[i])
-        r.sort((a, b) => a[sort] - b[sort])
-      }
-    }
-    return r
+    return data.map(menu => {
+      return Object.assign({}, menu)
+    })
   } else {
     return [data]
   }
 }
 
-// 添加父属性标记
-export const addParentLevelSign = (data, key = 'id', parentKey = 'menuParentId') => {
+// 一维数据转换成树形数据
+export const transformMenuToTree = (data, id = 'id', pId = 'parentId', sort = 'sort') => {
   if (Array.isArray(data)) {
     data = JSON.parse(JSON.stringify(data))
-    const keyMap = {}
-    for (let i = 0; i < data.length; i++) {
-      keyMap[data[i][key]] = data[i]
+    const parentList = JSON.parse(JSON.stringify(data)).filter(d => !d[pId])
+    const childrenList = JSON.parse(JSON.stringify(data)).filter(d => !!d[pId])
+
+    data.filter(d => !d[pId]).forEach(d => (d.pName = d.name, d.pPath = d.path))
+    const translator = (parentList, childrenList) => {
+      parentList.forEach(parent => {
+        childrenList.forEach(current => {
+          if (parent[id] === current[pId]) {
+            const findP = data.find(d => d[id] === parent[id])
+            const findC = data.find(d => d[id] === current[id])
+
+            findC.pName = `${findP.pName}=>${findC.name}`
+            findC.pPath = `${findP.pPath}=>${findC.path}`
+
+            Array.isArray(parent.children) ? parent.children.push(current) : (parent.children = [current])
+            parent.children.sort((a, b) => a[sort] - b[sort])
+            translator([current], childrenList.filter(d => d.id !== current.id))
+          }
+        })
+      })
     }
-    for (let i = 0; i < data.length; i++) {
-      const pMap = keyMap[data[i][parentKey]] // 父级
-      if (pMap && data[i][key] !== data[i][parentKey]) {
-        data[i].parentName = `${pMap.parentName}|${data[i].menuName}`
-        data[i].parentPath = `${pMap.parentPath}|${data[i].menuPath}`
-      } else {
-        data[i].parentName = data[i].menuName
-        data[i].parentPath = data[i].menuPath
-      }
+    translator(parentList, childrenList)
+    return {
+      menuTreeData: parentList,
+      menuData: data
     }
+  } else {
+    return [data]
   }
-  return data
 }
 
 // 转换时间戳

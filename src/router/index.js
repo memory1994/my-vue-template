@@ -23,17 +23,16 @@ router.beforeEach(async (to, from, next) => {
     } else {
       const data = await store.dispatch('setMenuList')
       console.log(data)
-      const routes = data.filter(m => !!m.menuPath).map(m => {
+      const routes = data.filter(m => !!m.path).map(m => {
         return {
-          'path': m.menuPath,
-          'name': m.menuPath.replace(/\//g, '-').replace(/^-/, ''),
+          'path': m.path,
+          'name': m.path.replace(/\//g, '-').replace(/^-/, ''),
           'meta': { 
-            'title': m.menuName,
-            'menuId': m.id,
-            'parentName': m.parentName,
-            'parentPath': m.parentPath
+            'title': m.name,
+            'pName': m.pName,
+            'pPath': m.pPath
           },
-          'component': () => import(`@/views${m.menuPath}`)
+          'component': () => import(`@/views${m.path}`)
         }
       })
       router.addRoutes([

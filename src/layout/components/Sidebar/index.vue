@@ -8,9 +8,9 @@
       active-text-color="#ffd04b"
       mode="vertical">
       <sidebar-item
-        v-for="(menuNav, index) of menuList"
-        :key="'menuNav' + index"
-        :menu-nav="menuNav"/>
+        v-for="(menu, index) of menuList"
+        :key="'menu' + index"
+        :menu="menu"/>
     </el-menu>
   </aside>
 </template>

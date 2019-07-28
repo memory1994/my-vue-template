@@ -1,23 +1,23 @@
 <template>
   <el-submenu
-    v-if="handleJudgeHasChildren(menuNav)"
-    :index="menuNav.menuPath">
+    v-if="handleJudgeHasChildren(menu)"
+    :index="menu.path">
     <template slot="title">
-      <i :class="[menuNav.menuIcon || 'el-icon-s-tools']"></i>
-      <span slot="title">{{menuNav.menuName}}</span>
+      <i :class="[menu.icon || 'el-icon-s-tools']"></i>
+      <span slot="title">{{menu.name}}</span>
     </template>
     <sidebar-item
-      v-for="(subMenuNav, index) of menuNav.children"
+      v-for="(subMenu, index) of menu.children"
       :key="'subMenuNav' + index"
-      :menu-nav="subMenuNav"/>
+      :menu="subMenu"/>
   </el-submenu>
 
   <el-menu-item
     v-else
-    :index="menuNav.menuPath"
-    @click="handleJumpPages(menuNav)">
-    <i :class="[menuNav.menuIcon || 'el-icon-s-tools']"></i>
-    <span slot="title">{{menuNav.menuName}}</span>
+    :index="menu.path"
+    @click="handleJumpPages(menu)">
+    <i :class="[menu.icon || 'el-icon-s-tools']"></i>
+    <span slot="title">{{menu.name}}</span>
   </el-menu-item>
 </template>
 
@@ -25,19 +25,19 @@
 export default {
   name: 'SidebarItem',
   props: {
-    menuNav: {
+    menu: {
       type: Object,
       default () { return {} }
     }
   },
   methods: {
     // 判断是否还有子数据
-    handleJudgeHasChildren (menuNav) {
-      return menuNav && menuNav.children && menuNav.children.length
+    handleJudgeHasChildren (menu) {
+      return menu && menu.children && menu.children.length
     },
     // 跳转页面
-    handleJumpPages (menuNav) {
-      this.$router.push(menuNav.menuPath)
+    handleJumpPages (menu) {
+      this.$router.push(menu.path)
     }
   }
 }

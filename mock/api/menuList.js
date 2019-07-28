@@ -6,19 +6,34 @@ export default () => {
     msg: '成功',
     data: {
       list: [
-       { id: 1, menuParentId: 0, sortNo: 1, menuPath: '/test/1', menuName: '企业基本信息', menuIcon: 'el-icon-phone' },
-       { id: 2, menuParentId: 0, sortNo: 2, menuPath: '', menuName: 'aa项目', menuIcon: 'el-icon-s-tools' },
-       { id: 5, menuParentId: 4, sortNo: 2, menuPath: '', menuName: 'bb项目', menuIcon: 'el-icon-eleme' },
-       { id: 3, menuParentId: 2, sortNo: 2, menuPath: '/test/4', menuName: 'cc项目', menuIcon: 'el-icon-info' },
-       { id: 4, menuParentId: 2, sortNo: 2, menuPath: '', menuName: 'dd项目', menuIcon: 'el-icon-goods' },
-       { id: 6, menuParentId: 5, sortNo: 2, menuPath: '/test/6', menuName: 'ee项目', menuIcon: 'el-icon-picture-outline' },
-       { id: 7, menuParentId: 0, sortNo: 2, menuPath: '/test/7', menuName: 'ff项目', menuIcon: 'el-icon-bell' },
-       { id: 8, menuParentId: 0, sortNo: 2, menuPath: '/test/8', menuName: 'gg项目', menuIcon: 'el-icon-s-platform' },
-       { id: 9, menuParentId: 0, sortNo: 2, menuPath: '/test/9', menuName: 'hh项目', menuIcon: 'el-icon-s-promotion' },
-       { id: 10, menuParentId: 0, sortNo: 2, menuPath: '/test/10', menuName: 'ii项目', menuIcon: 'el-icon-s-home' },
-       { id: 11, menuParentId: 0, sortNo: 2, menuPath: '/test/11', menuName: 'jj项目', menuIcon: 'el-icon-s-release' },
-       { id: 12, menuParentId: 0, sortNo: 2, menuPath: '/test/12', menuName: 'kk项目', menuIcon: 'el-icon-s-ticket' },
+       { id: 1, parentId: 0, sort: 1, path: '/test/1', name: '企业基本信息', icon: 'el-icon-phone' },
+       { id: 2, parentId: 0, sort: 2, path: '', name: 'aa项目', icon: 'el-icon-s-tools' },
+       { id: 5, parentId: 4, sort: 2, path: '', name: 'bb项目', icon: 'el-icon-eleme' },
+       { id: 3, parentId: 2, sort: 2, path: '/test/4', name: 'cc项目', icon: 'el-icon-info' },
+       { id: 4, parentId: 2, sort: 2, path: '', name: 'dd项目', icon: 'el-icon-goods' },
+       { id: 6, parentId: 5, sort: 2, path: '/test/6', name: 'ee项目', icon: 'el-icon-picture-outline' },
+       { id: 7, parentId: 0, sort: 2, path: '/test/7', name: 'ff项目', icon: 'el-icon-bell' },
+       { id: 8, parentId: 0, sort: 2, path: '/test/8', name: 'gg项目', icon: 'el-icon-s-platform' },
+       { id: 9, parentId: 0, sort: 2, path: '/test/9', name: 'hh项目', icon: 'el-icon-s-promotion' },
+       { id: 10, parentId: 0, sort: 2, path: '/test/10', name: 'ii项目', icon: 'el-icon-s-home' },
+       { id: 11, parentId: 0, sort: 2, path: '/test/11', name: 'jj项目', icon: 'el-icon-s-release' },
+       { id: 12, parentId: 0, sort: 2, path: '/test/12', name: 'kk项目', icon: 'el-icon-s-ticket' },
      ]
     }
   })
 }
+
+// { id: 1, parentId: 0, sort: 1, path: '/test/1', name: '企业基本信息', icon: 'el-icon-phone' },
+// { id: 2, parentId: 0, sort: 2, path: '', name: 'aa项目', icon: 'el-icon-s-tools' },
+// { id: 7, parentId: 0, sort: 2, path: '/test/7', name: 'ff项目', icon: 'el-icon-bell' },
+// { id: 8, parentId: 0, sort: 2, path: '/test/8', name: 'gg项目', icon: 'el-icon-s-platform' },
+// { id: 9, parentId: 0, sort: 2, path: '/test/9', name: 'hh项目', icon: 'el-icon-s-promotion' },
+// { id: 10, parentId: 0, sort: 2, path: '/test/10', name: 'ii项目', icon: 'el-icon-s-home' },
+// { id: 11, parentId: 0, sort: 2, path: '/test/11', name: 'jj项目', icon: 'el-icon-s-release' },
+// { id: 12, parentId: 0, sort: 2, path: '/test/12', name: 'kk项目', icon: 'el-icon-s-ticket' },
+
+
+// { id: 5, parentId: 4, sort: 2, path: '', name: 'bb项目', icon: 'el-icon-eleme' },
+// { id: 3, parentId: 2, sort: 2, path: '/test/4', name: 'cc项目', icon: 'el-icon-info' },
+// { id: 4, parentId: 2, sort: 2, path: '', name: 'dd项目', icon: 'el-icon-goods' },
+// { id: 6, parentId: 5, sort: 2, path: '/test/6', name: 'ee项目', icon: 'el-icon-picture-outline' },

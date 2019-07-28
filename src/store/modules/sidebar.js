@@ -1,5 +1,6 @@
 import { apiGetMenuList } from '@/api/menuList'
-import { transformMenuToTree, addParentLevelSign } from '@/utils/index'
+import { formatMenuList, transformMenuToTree } from '@/utils/index'
+import { Message } from 'element-ui'
 
 
 
@@ -20,8 +21,13 @@ const sidebar = {
   actions: {
     async setMenuList ({ commit }, params) {
       const res = await apiGetMenuList(params)
-      commit('SET_MENU_LIST', transformMenuToTree(res.data.list))
-      return addParentLevelSign(res.data.list)
+      if (res.code === 'SUCCESS') {
+        const { menuData, menuTreeData } = transformMenuToTree(formatMenuList(res.data.list))
+        commit('SET_MENU_LIST', menuTreeData)
+        return menuData
+      } else {
+        Message(res.msg)
+      }
     },
     toggleSidebar ({ commit }) {
       commit('TOGGLE_SIDEBAR')
