@@ -2,7 +2,7 @@
   <el-breadcrumb class="navbar-el-breadcrumb">
     <transition-group name="breadcrumb">
       <el-breadcrumb-item
-        v-for="(item, index) in levelList"
+        v-for="(item,index) in levelList"
         :key="index"
         :to="item.path ? { path: item.path } : ''">
         {{item.name}}
@@ -12,24 +12,18 @@
 </template>
 
 <script>
-import { getterMap } from 'vuex'
 export default {
   name: 'Breadcrumb',
-  data () {
-    return {
-      list: []
-    }
-  },
   computed: {
     levelList () {
-      let route = this.$route
-      let pathList = route.meta.pPath.split('=>')
-      let nameList = route.meta.pName.split('=>')
+      let { pPath, pName } = this.$route.meta
+      let pathList = pPath ? pPath.split('=>') : []
+      let nameList = pName ? pName.split('=>') : []
       let levelList = []
-      pathList.forEach((p, i) => {
+      nameList.forEach((name, index) => {
         levelList.push({
-          path: p,
-          name: nameList[i]
+          path: pathList[index],
+          name
         })
       })
       return levelList
@@ -49,7 +43,19 @@ export default {
       color: #999 !important;
     }
   }
-  
+  .breadcrumb-enter-active,
+  .breadcrumb-leave-active {
+    transition: all 0.5s ease;
+  }
+
+  .breadcrumb-enter,
+  .breadcrumb-leave-active {
+    opacity: 0;
+    transform: translateX(20px)
+  }
+  .breadcrumb-leave-active {
+    position: absolute;
+  }
 }
 </style>
 

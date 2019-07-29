@@ -3,6 +3,17 @@
 		<i :class="['breadcrumb', opened ? 'el-icon-s-fold' : 'el-icon-s-unfold']" @click="handleToggleSidebar"></i>
 
     <breadcrumb></breadcrumb>
+
+		<el-dropdown>
+			<div class="user-message">
+				<i class="el-icon-user-solid"></i>
+				<i class="el-icon-arrow-down el-icon--right"></i>
+			</div>
+			<el-dropdown-menu slot="dropdown">
+				<el-dropdown-item command="updatePassword">修改密码</el-dropdown-item>
+				<el-dropdown-item command="logout">退出</el-dropdown-item>
+			</el-dropdown-menu>
+		</el-dropdown>
 	</nav>
 </template>
 

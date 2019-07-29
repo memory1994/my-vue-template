@@ -18,9 +18,9 @@
         <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item command="closeCurrent">关闭当前标签页</el-dropdown-item>
-        <el-dropdown-item command="closeOthers">关闭其他标签页</el-dropdown-item>
-        <el-dropdown-item command="closeAll">关闭全部标签页</el-dropdown-item>
+        <el-dropdown-item command="closeCurrent" v-show="hasMoreViews">关闭当前标签页</el-dropdown-item>
+        <el-dropdown-item command="closeOthers" v-show="hasMoreViews">关闭其他标签页</el-dropdown-item>
+        <el-dropdown-item command="closeAll" v-show="hasMoreViews">关闭全部标签页</el-dropdown-item>
         <el-dropdown-item command="refreshCurrent">刷新当前标签页</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -36,6 +36,9 @@ export default {
     ...mapGetters([
       'visitedViews'
     ]),
+    hasMoreViews () {
+      return this.visitedViews.length > 1
+    },
     activeName: {
       get () {
         return this.$route.path

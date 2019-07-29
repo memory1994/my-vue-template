@@ -22,7 +22,6 @@ router.beforeEach(async (to, from, next) => {
       next()
     } else {
       const data = await store.dispatch('setMenuList')
-      console.log(data)
       const routes = data.filter(m => !!m.path).map(m => {
         return {
           'path': m.path,
@@ -35,9 +34,10 @@ router.beforeEach(async (to, from, next) => {
           'component': () => import(`@/views${m.path}`)
         }
       })
+      console.log(router)
       router.addRoutes([
         { path: '/', name: 'layout', component: () => import('@/layout/index'), children: routes},
-        { path: '*', redirect: '/404' }
+        // { path: '*', redirect: '/404' }
       ])
       next({...to, replace: true})
     }
