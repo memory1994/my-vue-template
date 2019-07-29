@@ -52,6 +52,13 @@ export default {
 		vertical-align: middle;
 		cursor: pointer;
 	}
+	.navbar-el-breadcrumb {
+		flex: 1;
+	}
+	.el-dropdown {
+		cursor: pointer;
+		margin-right: 10px;
+	}
 }
 </style>
 

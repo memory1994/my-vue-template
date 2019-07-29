@@ -37,9 +37,11 @@ export default {
   .el-breadcrumb__item {
     .el-breadcrumb__inner {
       color: #424040;
+      &.is-link {
+        font-weight: normal;
+      }
     }
-    &:last-child .el-breadcrumb__inner {
-      font-weight: normal;
+    &:last-child:not(:first-child) .el-breadcrumb__inner {
       color: #999 !important;
     }
   }
