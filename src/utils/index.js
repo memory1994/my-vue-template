@@ -16,17 +16,22 @@ export const transformMenuToTree = (data, id = 'id', pId = 'parentId', sort = 's
     const parentList = JSON.parse(JSON.stringify(data)).filter(d => !d[pId])
     const childrenList = JSON.parse(JSON.stringify(data)).filter(d => !!d[pId])
 
+    // 父级数据设置_level层级
+    parentList.forEach(d => d._level = 1)
+
     data.filter(d => !d[pId]).forEach(d => (d.pName = d.name, d.pPath = d.path))
     const translator = (parentList, childrenList) => {
       parentList.forEach(parent => {
         childrenList.forEach(current => {
           if (parent[id] === current[pId]) {
+            // 往子节点上添加父节点信息
             const findP = data.find(d => d[id] === parent[id])
             const findC = data.find(d => d[id] === current[id])
-
             findC.pName = `${findP.pName}=>${findC.name}`
             findC.pPath = `${findP.pPath}=>${findC.path}`
 
+            // 往子节点上添加_level
+            current._level = parent._level + 1
             Array.isArray(parent.children) ? parent.children.push(current) : (parent.children = [current])
             parent.children.sort((a, b) => a[sort] - b[sort])
             translator([current], childrenList.filter(d => d.id !== current.id))
