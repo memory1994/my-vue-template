@@ -17,7 +17,7 @@ export const transformMenuToTree = (data, id = 'id', pId = 'parentId', sort = 's
     const childrenList = JSON.parse(JSON.stringify(data)).filter(d => !!d[pId])
 
     // 父级数据设置_level层级
-    parentList.forEach(d => d._level = 1)
+    parentList.forEach(d => d._level = 0)
 
     data.filter(d => !d[pId]).forEach(d => (d.pName = d.name, d.pPath = d.path))
     const translator = (parentList, childrenList) => {

@@ -3,7 +3,7 @@
     <transition-group name="breadcrumb">
       <el-breadcrumb-item
         v-for="(item,index) in levelList"
-        :key="index"
+        :key="'level' + index"
         :to="item.path ? { path: item.path } : ''">
         {{item.name}}
       </el-breadcrumb-item>

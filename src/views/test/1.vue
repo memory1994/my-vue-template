@@ -23,8 +23,9 @@ export default {
     return {
       tableData: [],
       tableColumnConfig: [
-        { prop: 'id', label: 'id' },
-        { prop: 'name', label: '标题' },
+        { prop: 'name', label: '标题', columnType: 'tree' },
+        { prop: 'id', label: 'id'},
+        { prop: 'parentId', label: 'parentId'},
         { prop: 'path', label: '路由' }
       ]
     }

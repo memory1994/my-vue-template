@@ -1,17 +1,16 @@
 <template>
   <div class="table-list-component">
     <el-table
-      :data="tableData"
+      :data="newTableData"
       :border="tableBorder"
-      :stripe="tableStripe"
-      :tree-props="{children: 'children'}"
-      row-key="id"
-      @expand-change="handleaaa">
+      :stripe="tableStripe">
       <template v-for="(config, index) of tableColumnConfig">
         <table-tree-column
           v-if="config.columnType === 'tree'"
           :key="'tree' + index"
+          :tableData="newTableData"
           :prop="config.prop"
+          :label="config.label"
           :width="config.width"
           :fixed="config.fixed"
           :treeKey="config.treeKey"
@@ -57,6 +56,11 @@ export default {
     tableBorder: {
       type: Boolean,
       default: true
+    }
+  },
+  computed: {
+    newTableData () {
+      return this.tableData
     }
   },
   methods: {
