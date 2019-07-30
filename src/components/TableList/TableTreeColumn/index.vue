@@ -39,7 +39,8 @@ export default {
     },
     iconStyle (row) {
       return { 'padding-left': row[this.levelKey] > 1 ? row[this.levelKey] * 7 : 0  + 'px'}
-    }
+    },
+    toggleHandle () {}
   }
 }
 </script>
