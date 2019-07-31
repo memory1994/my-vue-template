@@ -7,6 +7,7 @@ function resolve (dir) {
 module.exports = {
   runtimeCompiler: true,
   chainWebpack: config => {
+    config.resolve.symlinks(true)
     config.resolve.alias.set('$mock', resolve('mock'))
   },
   devServer: {

@@ -29,6 +29,17 @@
           :width="config.width"
           :min-width="config.minWidth"
           :fixed="config.fixed">
+          <template v-slot="scope">
+            <table-render-column
+              v-if="handleIsShowRenderColumn(config)"
+              :scope="scope"
+              :column-config="config"/>
+
+            <span v-else>
+              {{scope.row[config.prop]}}
+            </span>
+            
+          </template>
         </el-table-column>
       </template>
     </el-table>
@@ -37,9 +48,10 @@
 
 <script>
 import TableTreeColumn from './TableTreeColumn'
+import TableRenderColumn from './TableRenderColumn'
 export default {
   name: 'TableList',
-  components: { TableTreeColumn },
+  components: { TableTreeColumn, TableRenderColumn },
   props: {
     tableData: {
       type: Array,
@@ -64,8 +76,8 @@ export default {
     }
   },
   methods: {
-    handleaaa () {
-      console.log(12)
+    handleIsShowRenderColumn (config) {
+      return config.render && typeof config.render === 'function'
     }
   }
 }

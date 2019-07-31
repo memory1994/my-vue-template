@@ -56,7 +56,6 @@ export default {
       return row[this.childKey] && Array.isArray(row[this.childKey]) && row[this.childKey].length
     },
     toggleHandle (index, row) {
-      console.log(index, row)
       if (!this.handleHasChild(row)) return
       row._expand = !row._expand
       if (row._expand) { // 展开
