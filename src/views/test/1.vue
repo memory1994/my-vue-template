@@ -9,13 +9,19 @@
       :visible.sync="aa">
       <table-list
         :tableData="tableData"
-        :tableColumnConfig="tableColumnConfig"
-        @handleEdit="handleEdit">
+        :tableColumnConfig="tableColumnConfig">
       </table-list>
     </el-dialog> -->
     <table-list
       :tableData="tableData"
       :tableColumnConfig="tableColumnConfig">
+      <!-- <div slot="header">
+        <el-button slot="header" type="primary">按钮</el-button>
+        <el-button slot="header" type="primary">按钮</el-button>
+        <el-button slot="header" type="primary">按钮</el-button>
+      </div> -->
+      
+      <el-button slot="footer">按钮</el-button>
     </table-list>
     
   </div>
@@ -37,12 +43,12 @@ export default {
         { prop: 'id', label: 'id'},
         { prop: 'parentId', label: 'parentId'},
         { prop: 'path', label: '路由' },
-        { label: '操作', render (row) {
+        { label: '操作', width:'250px', render (row) {
           var a = 1234
           return  `<el-tooltip effect="dark" content="编辑" placement="top">
-                    <el-button type="primary" @click="handleEdit">编辑${a}</el-button>
+                    <el-button type="primary" @click="handleEdit">编辑</el-button>
                    </el-tooltip>
-                   <el-tooltip effect="dark" content="编辑" placement="top">
+                   <el-tooltip effect="dark" content="编辑" placement="top" v-if="!row.hidden">
                     <el-button type="primary" @click="handleaaa">223232</el-button>
                    </el-tooltip>`
         } }
@@ -57,6 +63,7 @@ export default {
   methods: {
     handleEdit (scope, config) {
       console.log(scope, config)
+      this.$set(scope.row, 'hidden', true)
     },
     handleaaa (scope, config) {
       console.log(scope, config)

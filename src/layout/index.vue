@@ -52,6 +52,7 @@ export default {
     display: flex;
     flex-direction: column;
     width: calc(100% - 65px);
+    height: 100%;
     &.sidebar-opened {
       width: calc(100% - 200px);
     }

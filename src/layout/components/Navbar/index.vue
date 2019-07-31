@@ -41,8 +41,8 @@ export default {
 .navbar {
 	display: flex;
 	align-items: center;
-	height: 52px;
-	line-height: 52px;
+	height: 50px;
+	line-height: 50px;
 	background-color: #fff;
 	border-bottom: 1px solid #eee;
 	.breadcrumb {
