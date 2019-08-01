@@ -2,10 +2,12 @@
   <div class="table-list-component">
     <slot name="header"></slot>
     <el-table
+      v-loading="tableLoading"
       :data="newTableData"
       :border="tableBorder"
-      :stripe="tableStripe">
-      <template v-for="(config, index) of tableColumnConfig">
+      :stripe="tableStripe"
+      :max-height="maxHeight">
+      <template v-for="(config, index) of newTableColumnConfig">
         <table-tree-column
           v-if="config.columnType === 'tree'"
           :key="'tree' + index"
@@ -42,11 +44,16 @@
           </template>
         </el-table-column>
       </template>
+      <el-table-column
+        v-if="customHeader"
+        :render-header="handleRenderHeader"
+        width="50px"
+        align="center">
+      </el-table-column>
     </el-table>
 
     <div class="pagination-wrap">
       <slot name="footer" />
-
       <el-pagination
         :current-page="pages.currentPage"
         :page-size="pages.pageSize"
@@ -59,17 +66,21 @@
         @prev-click="handleCurrentChange"
         @next-click="handleCurrentChange"/>
     </div>
-    
   </div>
 </template>
 
 <script>
 import TableTreeColumn from './TableTreeColumn'
 import TableRenderColumn from './TableRenderColumn'
+import TableCustomHeader from './TableCustomHeader'
 export default {
   name: 'TableList',
   components: { TableTreeColumn, TableRenderColumn },
   props: {
+    tableLoading: {
+      type: Boolean,
+      default: false,
+    },
     tableData: {
       type: Array,
       default () { return [] }
@@ -78,13 +89,21 @@ export default {
       type: Array,
       default () { return [] }
     },
-    tableStripe: {
+    tableStripe: { // 斑马纹
       type: Boolean,
-      default: true,
+      default: false,
     },
-    tableBorder: {
+    tableBorder: { // table边框
       type: Boolean,
       default: true
+    },
+    maxHeight: {
+      type: [String, Number],
+      default: 'auto'
+    },
+    customHeader: { // 自定义表头
+      type: Boolean,
+      default: false
     },
     pages: {
       type: Object,
@@ -104,7 +123,7 @@ export default {
       type: String,
       default: "total, sizes, prev, pager, next"
     },
-    queryTableListFn: {
+    queryTableListFn: { // 查询table数据函数
       type: String,
       default: 'handleQueryTableList'
     }
@@ -112,6 +131,9 @@ export default {
   computed: {
     newTableData () {
       return this.tableData
+    },
+    newTableColumnConfig () {
+      return this.tableColumnConfig
     }
   },
   methods: {
@@ -140,7 +162,18 @@ export default {
       } else {
         this.$emit('current-change', page)
       }
-    }
+    },
+    // 列表标题Label渲染
+    handleRenderHeader (h) {
+      return h(
+        TableCustomHeader,
+        {
+          props: {
+            tableColumnConfig: this.newTableColumnConfig
+          }
+        }
+      )
+    },
   }
 }
 </script>
@@ -153,18 +186,18 @@ export default {
   background:#fff;
   box-sizing: border-box;
   .el-table {
+    width: 100%;
     margin-top: 10px;
-    .el-table__body-wrapper {
-      &::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
+    th {
+      background-color: #f2f4f5;
+      border-right: #f2f4f5;
+      > .cell {
+        color: #333;
       }
-      &::-webkit-scrollbar-track {
-
-      }
-      &::-webkit-scrollbar-thumb {
-
-      }
+    }
+    td {
+      height: 50px;
+      padding: 0;
     }
   }
 

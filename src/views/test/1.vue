@@ -14,7 +14,8 @@
     </el-dialog> -->
     <table-list
       :tableData="tableData"
-      :tableColumnConfig="tableColumnConfig">
+      :tableColumnConfig="tableColumnConfig"
+      :custom-header="true">
       <!-- <div slot="header">
         <el-button slot="header" type="primary">按钮</el-button>
         <el-button slot="header" type="primary">按钮</el-button>
@@ -40,11 +41,27 @@ export default {
       tableData: [],
       tableColumnConfig: [
         { prop: 'name', label: '标题', columnType: 'tree' },
-        { prop: 'id', label: 'id'},
+        { prop: 'id', label: 'id', render () {
+          return '<el-input />'
+        }},
         { prop: 'parentId', label: 'parentId'},
-        { prop: 'path', label: '路由' },
-        { label: '操作', width:'250px', render (row) {
-          var a = 1234
+        { prop: 'path', label: '路由' , render () {
+          return `
+                    <el-dropdown @command="handleCommand">
+                      <span class="el-dropdown-link">
+                        下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+                      </span>
+                      <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item command="a">黄金糕</el-dropdown-item>
+                        <el-dropdown-item command="b">狮子头</el-dropdown-item>
+                        <el-dropdown-item command="c">螺蛳粉</el-dropdown-item>
+                        <el-dropdown-item command="d" disabled>双皮奶</el-dropdown-item>
+                        <el-dropdown-item command="e" divided>蚵仔煎</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                 `
+        }},
+        { label: '操作', width:'250px', render () {
           return  `<el-tooltip effect="dark" content="编辑" placement="top">
                     <el-button type="primary" @click="handleEdit">编辑</el-button>
                    </el-tooltip>
@@ -61,12 +78,15 @@ export default {
     this.tableData = data.menuTreeData
   },
   methods: {
-    handleEdit (scope, config) {
-      console.log(scope, config)
-      this.$set(scope.row, 'hidden', true)
+    handleEdit () {
+      console.log(arguments)
+      // this.$set(scope.row, 'hidden', true)
     },
     handleaaa (scope, config) {
       console.log(scope, config)
+    },
+    handleCommand () {
+      console.log(arguments)
     }
   }
 }

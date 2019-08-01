@@ -2,16 +2,6 @@
 export default {
   name: 'TableRenderColumn',
   functional: true,
-  props: {
-    scope: {
-      type: Object,
-      default () { return {} }
-    },
-    columnConfig: {
-      type: Object,
-      default () { return {} }
-    }
-  },
   render (h, { props, parent }) {
     const html = props.columnConfig.render(props.scope.row, props.columnConfig)
     const reg = /(?:@|v-on)\w+(?:\.\w+)?="(\w+)"/g
@@ -27,13 +17,15 @@ export default {
       }
     }
     methodList && methodList.forEach(method => {
-      method && (renderObject.methods[method] = () => {
+      method && (renderObject.methods[method] = (...arg) => {
+        const [ firstArg, ...othersArg ] = arg
+        !(firstArg instanceof Event) && othersArg.unshift(firstArg)
         if (parent.$parent && parent.$parent[method] && typeof parent.$parent[method] === 'function') {
-          parent.$parent[method](props.scope, props.columnConfig)
+          parent.$parent[method](...othersArg, props.scope, props.columnConfig)
         } else if (parent.$parent && parent.$parent.$parent && parent.$parent.$parent[method] && typeof parent.$parent.$parent[method] === 'function') {
           parent.$parent.$parent[method](props.scope, props.columnConfig)
         } else {
-          parent.$emit(method, props.scope, props.columnConfig)
+          parent.$emit(method, ...othersArg, props.scope, props.columnConfig)
         }
       })
     })
@@ -41,7 +33,8 @@ export default {
       renderObject,
       {
         props: {
-          row: props.scope.row
+          row: props.scope.row,
+          columnConfig: props.scope.columnConfig
         }
       }
     )
