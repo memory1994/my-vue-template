@@ -18,7 +18,7 @@
       v-model="checkedList"
       @change="handleCheckedChange">
       <el-checkbox
-        v-for="(config, index) of computeTableColumnConfig"
+        v-for="(config, index) of newTableColumnConfig"
         :key="'config' + index"
         :label="index"
         :title="config.label">
@@ -53,26 +53,30 @@ export default {
     }
   },
   computed: {
-    computeTableColumnConfig () {
-      return tableColumnConfig
+    newTableColumnConfig () {
+      return this.tableColumnConfig
+    },
+    computeColumnConfig () {
+      return this.tableColumnConfig.map((c, i) => i)
     }
   },
   mounted () {
-    this.handleInitFn()
+    this.handleInitFn(true)
   },
   methods: {
-    handleInitFn () {
-      const config = JSON.parse(JSON.stringify(this.computeTableColumnConfig))
+    handleInitFn (isInit) {
+      const config = JSON.parse(JSON.stringify(this.newTableColumnConfig))
+      this.checkedList = []
       config.forEach((c, i) => {
-        c.checkedCurrentColumn = true
-        this.checkedList.push(i)
+        isInit && (c.showCurrentColumn = true) // 目前初始化全部勾选
+        c.showCurrentColumn && this.checkedList.push(i)
       })
-      this.checkAll = this.checkedList.length === config.length
+      this.checkAll = this.checkedList.length === config.length // 全选按钮状态
       this.isIndeterminate = !this.checkAll
     },
     // 全选
     handleCheckAllChange (val) {
-      this.checkedList = val ? this.tableColumnConfig.map((c, i) => i) : []
+      this.checkedList = val ? this.computeColumnConfig : []
       this.isIndeterminate = false
     },
     // 选择单个
@@ -87,7 +91,9 @@ export default {
     },
     // 点击确定按钮
     handleSaveCustomHeader () {
-      const checkedList = this.checkedList
+      let checkedList = this.checkedList
+      this.newTableColumnConfig.forEach((c, i) => c.showCurrentColumn = checkedList.includes(i))
+      this.showCustomHeader = false
     }
   }
 }

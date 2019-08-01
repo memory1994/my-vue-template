@@ -9,7 +9,7 @@
       :max-height="maxHeight">
       <template v-for="(config, index) of newTableColumnConfig">
         <table-tree-column
-          v-if="config.columnType === 'tree'"
+          v-if="config.columnType === 'tree' && config.showCurrentColumn"
           :key="'tree' + index"
           :tableData="newTableData"
           :prop="config.prop"
@@ -23,7 +23,7 @@
         </table-tree-column>
 
         <el-table-column
-          v-else
+          v-else-if="config.showCurrentColumn"
           :key="'column' + index"
           :prop="config.prop"
           :label="config.label"
@@ -133,8 +133,13 @@ export default {
       return this.tableData
     },
     newTableColumnConfig () {
-      return this.tableColumnConfig
+      let tableColumnConfig = this.tableColumnConfig
+      tableColumnConfig.forEach(c => (this.$set(c, 'showCurrentColumn', true))) // 设置是否显示列
+      return tableColumnConfig
     }
+  },
+  mounted () {
+    console.log(this.tableColumnConfig)
   },
   methods: {
     // 是否渲染renderColumn组件
