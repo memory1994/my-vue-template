@@ -6,7 +6,8 @@
       :data="newTableData"
       :border="tableBorder"
       :stripe="tableStripe"
-      :max-height="maxHeight">
+      :max-height="maxHeight"
+      :span-method="handleSpanMethod">
       <template v-for="(config, index) of newTableColumnConfig">
         <table-tree-column
           v-if="config.columnType === 'tree' && config.showCurrentColumn"
@@ -48,7 +49,8 @@
         v-if="customHeader"
         :render-header="handleRenderHeader"
         width="50px"
-        align="center">
+        align="center"
+        fixed="right">
       </el-table-column>
     </el-table>
 
@@ -136,12 +138,33 @@ export default {
       let tableColumnConfig = this.tableColumnConfig
       tableColumnConfig.forEach(c => (this.$set(c, 'showCurrentColumn', true))) // 设置是否显示列
       return tableColumnConfig
+    },
+    showColumnLen () {
+      return this.newTableColumnConfig.filter(c => c.showCurrentColumn).length
     }
   },
-  mounted () {
-    console.log(this.tableColumnConfig)
-  },
   methods: {
+    // table表格合并行列方法
+    handleSpanMethod ({ columnIndex }) {
+      if (!this.customHeader) return
+      if (columnIndex === this.showColumnLen - 1) {
+        return {
+          rowspan: 1,
+          colspan: 2
+        }
+      }
+    },
+    // table表头渲染方法
+    handleRenderHeader (h) {
+      return h(
+        TableCustomHeader,
+        {
+          props: {
+            tableColumnConfig: this.newTableColumnConfig
+          }
+        }
+      )
+    },
     // 是否渲染renderColumn组件
     handleIsShowRenderColumn (config) {
       return config.render && typeof config.render === 'function'
@@ -167,17 +190,6 @@ export default {
       } else {
         this.$emit('current-change', page)
       }
-    },
-    // 列表标题Label渲染
-    handleRenderHeader (h) {
-      return h(
-        TableCustomHeader,
-        {
-          props: {
-            tableColumnConfig: this.newTableColumnConfig
-          }
-        }
-      )
     },
   }
 }

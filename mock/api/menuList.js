@@ -16,7 +16,7 @@ export default () => {
        { id: 7, parentId: 0, sort: 2, path: '/test/7', name: 'ff项目', icon: 'el-icon-bell' },
        { id: 8, parentId: 0, sort: 2, path: '/test/8', name: 'gg项目', icon: 'el-icon-s-platform' },
        { id: 9, parentId: 0, sort: 2, path: '/test/9', name: 'hh项目', icon: 'el-icon-s-promotion' },
-       { id: 13, parentId: 8, sort: 2, path: '/test/9', name: 'hh项目', icon: 'el-icon-s-promotion' },
+       { id: 15, parentId: 8, sort: 2, path: '/test/9', name: 'hh项目', icon: 'el-icon-s-promotion' },
        { id: 14, parentId: 9, sort: 2, path: '/test/9', name: 'hh项目', icon: 'el-icon-s-promotion' },
        { id: 10, parentId: 0, sort: 2, path: '/test/10', name: 'ii项目', icon: 'el-icon-s-home' },
        { id: 11, parentId: 0, sort: 2, path: '/test/11', name: 'jj项目', icon: 'el-icon-s-release' },
