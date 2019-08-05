@@ -1,8 +1,8 @@
 <template>
-  <div>1.vue
-
-    <el-button type="primary" @click="$router.push('/test/111')">跳转页面1</el-button>
-    <el-button type="primary" @click="$router.push('/test/222')">跳转页面2</el-button>
+  <div>
+    <query-condition
+      :query-condition-values.sync="queryConditionValues"
+      :query-condition-config="queryConditionConfig"/>
 
     <!-- <el-dialog
       title="提示"
@@ -33,10 +33,11 @@
 
 <script>
 import TableList from '@/components/TableList'
+import QueryCondition from '@/components/QueryCondition'
 import { apiGetMenuList } from '@/api/menuList'
 import { transformMenuToTree } from '@/utils/index'
 export default {
-  components: { TableList },
+  components: { TableList, QueryCondition },
   data () {
     return {
       aa: true,
@@ -71,6 +72,24 @@ export default {
           return  `<el-button type="text" @click="handleEdit">编辑</el-button>
                    <el-button type="text" @click="handleaaa">223232</el-button>`
         } }
+      ],
+      queryConditionValues: {
+        aa: '',
+        bb: '',
+        cc: '',
+        dd: '',
+        startTime: '',
+        endTime: ''
+      },
+      queryConditionConfig: [
+        { type: 'input', prop: 'aa', label: '菜单名称', placeholder: '请输入数据' },
+        { type: 'select', prop: 'bb', label: '活动区域', placeholder: '请选择下拉框', options: [
+          { label: '黄金糕', value: '选项1' },
+          { label: '双皮奶', value: '选项2' },
+          { label: '龙须面', value: '选项3' }
+        ] },
+        { type: 'datetime', prop: 'cc', label: '活动时间', placeholder: '选择时间' },
+        { type: 'datetimerange', prop: 'dd', sprop: 'startTime', eprop: 'endTime', label: '时间范围', placeholder: '选择时间范围' }
       ]
     }
   },

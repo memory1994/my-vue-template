@@ -71,3 +71,13 @@ export const format = (now, fmt = 'yyyy-MM-dd hh:mm:ss') => {
   }
   return fmt
 }
+
+
+// 克隆数据
+export const clone = (obj) => {
+  if (!obj || typeof obj !== 'object') {
+    return obj
+  } else {
+    return JSON.parse(JSON.stringify(obj))
+  }
+}

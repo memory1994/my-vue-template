@@ -7,7 +7,11 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/styles/base.scss'
 
+import { clone } from '@/utils/index'
+
 Vue.use(ElementUI)
+
+Vue.prototype.$clone = clone
 
 Vue.config.productionTip = false
 
