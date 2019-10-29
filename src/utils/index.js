@@ -1,3 +1,12 @@
+// 克隆数据
+export const clone = (obj) => {
+  if (!obj || typeof obj !== 'object') {
+    return obj
+  } else {
+    return JSON.parse(JSON.stringify(obj))
+  }
+}
+
 // 格式化菜单menu数据
 export const formatMenuList = (data) => {
   if (Array.isArray(data)) {
@@ -12,9 +21,9 @@ export const formatMenuList = (data) => {
 // 一维数据转换成树形数据
 export const transformMenuToTree = (data, id = 'id', pId = 'parentId', sort = 'sort') => {
   if (Array.isArray(data)) {
-    data = JSON.parse(JSON.stringify(data))
-    const parentList = JSON.parse(JSON.stringify(data)).filter(d => !d[pId])
-    const childrenList = JSON.parse(JSON.stringify(data)).filter(d => !!d[pId])
+    data = clone(data)
+    const parentList = clone(data).filter(d => !d[pId])
+    const childrenList = clone(data).filter(d => !!d[pId])
 
     // 父级数据设置_level层级
     parentList.forEach(d => d._level = 0)
@@ -34,7 +43,7 @@ export const transformMenuToTree = (data, id = 'id', pId = 'parentId', sort = 's
             current._level = parent._level + 1
             Array.isArray(parent.children) ? parent.children.push(current) : (parent.children = [current])
             parent.children.sort((a, b) => a[sort] - b[sort])
-            translator([current], childrenList.filter(d => d.id !== current.id))
+            translator([current], childrenList.filter(d => d[id] !== current[id]))
           }
         })
       })
@@ -70,14 +79,4 @@ export const format = (now, fmt = 'yyyy-MM-dd hh:mm:ss') => {
     }
   }
   return fmt
-}
-
-
-// 克隆数据
-export const clone = (obj) => {
-  if (!obj || typeof obj !== 'object') {
-    return obj
-  } else {
-    return JSON.parse(JSON.stringify(obj))
-  }
 }

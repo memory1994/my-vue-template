@@ -16,7 +16,7 @@
       :tableData="tableData"
       :tableColumnConfig="tableColumnConfig"
       :pages="pages"
-      :custom-header="false"
+      :custom-header="true"
       :tableLoading="tableLoading">
       <!-- <div slot="header">
         <el-button slot="header" type="primary">按钮</el-button>
@@ -68,10 +68,10 @@ export default {
         //             </el-dropdown>
         //          `
         // }},
-        { label: '操作', width:'250px', fixed: 'right', render () {
-          return  `<el-button type="text" @click="handleEdit">编辑</el-button>
-                   <el-button type="text" @click="handleaaa">223232</el-button>`
-        } }
+        // { label: '操作', width:'250px', fixed: 'right', render () {
+        //   return  `<el-button type="text" @click="handleEdit">编辑</el-button>
+        //            <el-button type="text" @click="handleaaa">223232</el-button>`
+        // } }
       ],
       queryConditionValues: {
         aa: '',

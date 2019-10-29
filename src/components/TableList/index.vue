@@ -34,11 +34,14 @@
           :min-width="config.minWidth"
           :fixed="config.fixed">
           <template v-slot="scope">
-            <table-render-column
-              v-if="handleIsShowRenderColumn(config)"
-              :scope="scope"
-              :column-config="config"/>
-
+            <slot v-if="config.slot" :name="config.slot"/>
+            <template v-else-if="config.content">
+              <component
+                v-for="name of config.content.split(',')"
+                :key="name + 'content'"
+                :is="name"
+                @tableContentEmit="handleTableContentEmit"/>
+            </template>
             <span v-else>
               {{scope.row[config.prop]}}
             </span>
@@ -75,9 +78,10 @@
 import TableTreeColumn from './TableTreeColumn'
 import TableRenderColumn from './TableRenderColumn'
 import TableCustomHeader from './TableCustomHeader'
+import Add from './TableButtonList/add'
 export default {
   name: 'TableList',
-  components: { TableTreeColumn, TableRenderColumn },
+  components: { TableTreeColumn, TableRenderColumn, Add },
   props: {
     tableLoading: {
       type: Boolean,
@@ -165,9 +169,9 @@ export default {
         }
       )
     },
-    // 是否渲染renderColumn组件
-    handleIsShowRenderColumn (config) {
-      return config.render && typeof config.render === 'function'
+    // table自定义内容组件$emit方法
+    handleTableContentEmit () {
+      console.log(arguments)
     },
     // 是否存在初始化查询table表格方法
     handleHasTableQueryList () {

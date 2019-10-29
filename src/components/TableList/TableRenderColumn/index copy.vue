@@ -1,13 +1,9 @@
-
 <script>
-import Vue from 'vue'
 export default {
   name: 'TableRenderColumn',
   functional: true,
   render (h, { props, parent }) {
     const html = props.columnConfig.render(props.scope.row, props.columnConfig)
-
-    console.log(Vue)
     const reg = /(?:@|v-on)\w+(?:\.\w+)?=["']?(\w+)["']?/g
     let methodList = null
     if (html && typeof html === 'string' && reg.test(html)) {
@@ -33,17 +29,12 @@ export default {
         }
       })
     })
-    return h('div',
+    return h(
+      renderObject,
       {
         props: {
           row: props.scope.row,
           columnConfig: props.scope.columnConfig
-        },
-        class: {
-          'table-render-column': true
-        },
-        on: {
-
         }
       }
     )

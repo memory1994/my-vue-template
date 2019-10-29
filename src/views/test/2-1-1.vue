@@ -29,7 +29,7 @@ export default {
       tableColumnConfig: [
         { prop: 'name', label: '标题', columnType: 'tree' },
         { prop: 'id', label: 'id' },
-        { prop: 'parentId', label: 'parentId'},
+        { prop: 'parentId', label: 'parentId', content: 'Add'},
         // { prop: 'path', label: '路由' , render () {
         //   return `
         //             <el-dropdown>
