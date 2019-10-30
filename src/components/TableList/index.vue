@@ -37,9 +37,11 @@
             <slot v-if="config.slot" :name="config.slot"/>
             <template v-else-if="config.content">
               <component
-                v-for="name of config.content.split(',')"
-                :key="name + 'content'"
-                :is="name"
+                v-for="(value, key) in handleAnalysisConfigContent(config.content, scope.row)"
+                :key="key + 'content'"
+                :is="`TableContent${value.name.replace(/^(\w)/, (s) => s.toUpperCase())}`"
+                :row="scope.row"
+                :selfCustomConfig="scope.row.tableCustomConfig[key]"
                 @tableContentEmit="handleTableContentEmit"/>
             </template>
             <span v-else>
@@ -76,12 +78,12 @@
 
 <script>
 import TableTreeColumn from './TableTreeColumn'
-import TableRenderColumn from './TableRenderColumn'
 import TableCustomHeader from './TableCustomHeader'
-import Add from './TableButtonList/add'
+import TableCustomContent from './TableCustomContent/mixins'
 export default {
   name: 'TableList',
-  components: { TableTreeColumn, TableRenderColumn, Add },
+  mixins: [ TableCustomContent ],
+  components: { TableTreeColumn },
   props: {
     tableLoading: {
       type: Boolean,
@@ -169,9 +171,34 @@ export default {
         }
       )
     },
+    // 解析config.content
+    handleAnalysisConfigContent (content, row) {
+      let ctn = typeof content === 'string' ? content.split(',') : content
+      let tableCustomConfig = {}
+      ctn.forEach(item => {
+        let extCon = typeof item === 'object' ? item : { name: item } // 外部传入配置
+        extCon.name = extCon.name.trim()
+        // 合并默认tableCustom配置和传入的配置和公共组件配置
+        tableCustomConfig[extCon.name] = Object.assign(
+          {},
+          this.defaultTableCustomConfig,
+          extCon,
+          this.commonCustomComponent[extCon.name] || {},
+          extCon.text ? { text: extCon.text } : {}) // 如果外部传入text，覆盖普通常用组件配置
+      })
+      // console.log(tableCustomConfig)
+      this.$set(row, 'tableCustomConfig', tableCustomConfig)
+      return tableCustomConfig
+    },
     // table自定义内容组件$emit方法
     handleTableContentEmit () {
-      console.log(arguments)
+      const args = arguments
+      const eventName = args[args.length - 1]
+      if (this.$parent[eventName]) {
+        this.$parent[eventName](...args)
+      } else {
+        this.$emit(eventName, ...args)
+      }
     },
     // 是否存在初始化查询table表格方法
     handleHasTableQueryList () {

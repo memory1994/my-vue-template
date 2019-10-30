@@ -3,8 +3,7 @@
 
     <table-list
       :tableData="tableData"
-      :tableColumnConfig="tableColumnConfig"
-      :custom-header="true">
+      :tableColumnConfig="tableColumnConfig">
       <!-- <div slot="header">
         <el-button slot="header" type="primary">按钮</el-button>
         <el-button slot="header" type="primary">按钮</el-button>
@@ -29,7 +28,10 @@ export default {
       tableColumnConfig: [
         { prop: 'name', label: '标题', columnType: 'tree' },
         { prop: 'id', label: 'id' },
-        { prop: 'parentId', label: 'parentId', content: 'add'},
+        { prop: 'parentId', label: 'parentId', content: [
+          { name: 'add', show: true },
+          { name: 'edit', show: true, disabled: true }
+        ]},
         // { prop: 'path', label: '路由' , render () {
         //   return `
         //             <el-dropdown>
@@ -70,6 +72,12 @@ export default {
     const data = transformMenuToTree(res.data.list)
     this.tableData = data.menuTreeData
   },
+  methods: {
+    handleTableContentAddButton ({ selfCustomConfig, row }) {
+      // selfCustomConfig.disabled = true
+      // row.tableCustomConfig.edit.disabled = false
+    }
+  }
 }
 </script>
 
