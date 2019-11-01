@@ -4,7 +4,7 @@
     <div class="main-container" :class="{'sidebar-opened': opened}">
       <navbar />
       <tags-view />
-      <app-main v-if="isRouteAlive"/>
+      <main-content v-if="isRouteAlive"/>
     </div>
   </div>
 </template>
@@ -13,11 +13,11 @@
 import { mapGetters } from 'vuex'
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
-import AppMain from './components/AppMain'
+import MainContent from './components/MainContent'
 import TagsView from './components/TagsView'
 export default {
   name: 'Layout',
-  components: { Navbar, Sidebar, AppMain, TagsView },
+  components: { Navbar, Sidebar, MainContent, TagsView },
   provide () {
     return {
       refreshCurPage: this.handleRefreshCurPage

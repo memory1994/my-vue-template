@@ -41,7 +41,7 @@
                 :key="key + 'content'"
                 :is="`TableContent${value.name.replace(/^(\w)/, (s) => s.toUpperCase())}`"
                 :row="scope.row"
-                :selfCustomConfig="scope.row.tableCustomConfig[key]"
+                :customConfigName="key"
                 @tableContentEmit="handleTableContentEmit"/>
             </template>
             <span v-else>
@@ -171,22 +171,23 @@ export default {
         }
       )
     },
-    // 解析config.content
+    // 解析config.content, 合并配置
     handleAnalysisConfigContent (content, row) {
       let ctn = typeof content === 'string' ? content.split(',') : content
       let tableCustomConfig = {}
       ctn.forEach(item => {
         let extCon = typeof item === 'object' ? item : { name: item } // 外部传入配置
         extCon.name = extCon.name.trim()
-        // 合并默认tableCustom配置和传入的配置和公共组件配置
+        let reuseCon = this.configReuseCustomComponent[extCon.name]
+        // 合并默认tableCustom配置和传入的配置和复用组件配置
         tableCustomConfig[extCon.name] = Object.assign(
           {},
           this.defaultTableCustomConfig,
+          reuseCon || {},
           extCon,
-          this.commonCustomComponent[extCon.name] || {},
-          extCon.text ? { text: extCon.text } : {}) // 如果外部传入text，覆盖普通常用组件配置
+          reuseCon ? { name: reuseCon.name } : {} // 传入组件属于复用组件，替换组件名为复用组件名
+        )  
       })
-      // console.log(tableCustomConfig)
       this.$set(row, 'tableCustomConfig', tableCustomConfig)
       return tableCustomConfig
     },

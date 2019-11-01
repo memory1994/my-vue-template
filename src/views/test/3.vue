@@ -73,9 +73,13 @@ export default {
     this.tableData = data.menuTreeData
   },
   methods: {
-    handleTableContentAddButton ({ selfCustomConfig, row }) {
-      // selfCustomConfig.disabled = true
-      // row.tableCustomConfig.edit.disabled = false
+    handleTableContentAddButton () {
+      this.$router.push({
+        path: '/demo/1'
+      })
+    },
+    handleTableContentEditButton ({ selfCustomConfig }) {
+      selfCustomConfig.disabled = true
     }
   }
 }
